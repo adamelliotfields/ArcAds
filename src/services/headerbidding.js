@@ -87,7 +87,7 @@ export function fetchBids({
     adSlot: slotName,
     adDimensions: dimensions,
     adId: id,
-    bids: bidding,
+    bids: bidding.prebid.bids || [],
   };
 
   const prebidBids = new Promise((resolve) => {
