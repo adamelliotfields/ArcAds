@@ -93,9 +93,17 @@ export function fetchBids({
   const prebidBids = new Promise((resolve) => {
     if (wrapper.prebid && wrapper.prebid.enabled) {
       const timeout = wrapper.prebid.timeout || 700;
-      queuePrebidCommand.bind(this, fetchPrebidBids(ad, wrapper.prebid.useSlotForAdUnit ? slotName : id, timeout, adInfo, prerender, () => {
-        resolve('Fetched Prebid ads!');
-      }));
+      queuePrebidCommand(() => {
+        const start = Date.now();
+        fetchPrebidBids(ad, wrapper.prebid.useSlotForAdUnit ? slotName : id, timeout, adInfo, prerender, () => {
+          const end = Date.now();
+          console.log(`Fetched Prebid ads in ${end - start}ms!`);
+          resolve('Fetched Prebid ads!');
+        });
+      });
+      // queuePrebidCommand.bind(this, fetchPrebidBids(ad, wrapper.prebid.useSlotForAdUnit ? slotName : id, timeout, adInfo, prerender, () => {
+      //   resolve('Fetched Prebid ads!');
+      // }));
     } else {
       resolve('Prebid is not enabled on the wrapper...');
     }
@@ -103,7 +111,10 @@ export function fetchBids({
 
   const amazonBids = new Promise((resolve) => {
     if (wrapper.amazon && wrapper.amazon.enabled) {
+      const start = Date.now();
       fetchAmazonBids(id, slotName, dimensions, breakpoints, () => {
+        const end = Date.now();
+        console.log(`Fetched Amazon ads in ${end - start}ms!`);
         resolve('Fetched Amazon ads!');
       });
     } else {
@@ -122,6 +133,7 @@ export function fetchBids({
         });
       });
   } else {
+    console.log('Initializing bidding services...');
     setTimeout(() => initializeBiddingServices(), 200);
   }
 }
