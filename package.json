@@ -9,8 +9,7 @@
     "dev": "rm -rf dist && webpack --env.development --watch",
     "docs": "rm -rf docs && ./node_modules/.bin/esdoc && open docs/index.html",
     "debug": "node debugging.js",
-    "mock": "webpack-dev-server --progress --hot --inline && npm run test",
-    "postinstall": "npm run build"
+    "mock": "webpack-dev-server --progress --hot --inline && npm run test"
   },
   "repository": {
     "type": "git",
