@@ -10,7 +10,7 @@
     "docs": "rm -rf docs && ./node_modules/.bin/esdoc && open docs/index.html",
     "debug": "node debugging.js",
     "mock": "webpack-dev-server --progress --hot --inline && npm run test",
-    "prepare": "npm run build"
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
